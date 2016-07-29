@@ -9,30 +9,39 @@
 // @version     1
 // @grant       none
 // ==/UserScript==
-$(document).ready(function () {
+
+$.noConflict(); //dont interfere with reddits version of jquery (2.1.0? --unsure)
+
   $('.expando-button.expanded.video').click(function () {
     var url = $('a.title').attr('href');
     var myId = getId(url);
-    var new_iframe = '<iframe width="100%" height="90%" src="//www.youtube.com/embed/'
-    + myId + '" frameborder="0" allowfullscreen autoplay="1"></iframe>';
+
+    var new_iframe = '<iframe width="100%" height="90%" src="//www.youtube.com/embed/'+
+    myId +
+    '" frameborder="0" allowfullscreen autoplay="1"></iframe>';
+
     var close_div = '<div><p><a class = "floater-close" href="javascript:void(0)">Close</a></p></div>';
+
     var floater = '<div class="floatbox" ' +
     'style=z-index:100000;position:fixed;width:28%;height:33%;right:0;top:0;>' +
     new_iframe +
     close_div +
     '</div>';
+
+
     $(floater).appendTo('body');
     $('.floater-close').click(function () {
       $('.floatbox').remove();
     });
   });
-  function getId(url) {
-    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    var match = url.match(regExp);
-    if (match && match[2].length == 11) {
-      return match[2];
-    } else {
-      return 'error';
-    }
+
+
+function getId(url) {
+  var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  var match = url.match(regExp);
+  if (match && match[2].length == 11) {
+    return match[2];
+  } else {
+    return 'error';
   }
-});
+}
