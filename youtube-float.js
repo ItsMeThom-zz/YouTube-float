@@ -12,6 +12,7 @@
 
 $.noConflict(); //dont interfere with reddits version of jquery (2.1.0? --unsure)
 
+//overload the video expand button to open our floating video box
   $('.expando-button.expanded.video').click(function () {
     var url = $('a.title').attr('href');
     var myId = getId(url);
